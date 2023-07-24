@@ -1,0 +1,87 @@
+// .dashboard-menu .ant-menu-light.ant-menu-item-selected {
+//     background-color: red!important; 
+//     color: black;
+// }
+
+// .menu-options .ant-menu-light > .ant-menu .ant-menu-item-selected {
+//     color:'white';
+// }
+
+@import "./fonts";
+
+
+body {
+    font-family: $main-font!important;
+}
+
+.auth {
+    text-align: left!important;
+}
+
+
+
+.menu-options {
+    background-color: #fe9500;
+    font-family: $main-font!important;
+
+    .ant-menu-item-selected .ant-menu-title-content {
+        position: relative;
+        color: #fe9500;
+       
+    }
+    .ant-menu-title-content{
+        font-size: 16px;
+    }
+     .ant-menu-item-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    fill: gold;
+    font-style: normal;
+    line-height: 0;
+    text-align: center;
+    text-transform: none;
+    vertical-align: -0.125em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    
+    }
+}
+
+.recipecardbutton {
+    color: #fe9500!important;
+}
+
+
+
+.slick-dots li button:before {
+    font-family: 'slick';
+    font-size: 6px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: '•';
+    text-align: center;
+    opacity: .25;
+    color: black;
+    font-size: 14px!important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.slick-dots li.slick-active button:before {
+    color: #fe9500!important;
+    font-weight: 900;
+    font-size: 14px;
+  }
+  .slick-slider .slick-slide {
+    margin: 0!important;
+  }
+  
+  
+ .ant-upload .ant-upload-select {
+    display: none!important;
+}
