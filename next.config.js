@@ -7,6 +7,7 @@ module.exports = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   optimizeFonts: false,
+  webpack5: false,
 }
 
 module.exports = nextConfig

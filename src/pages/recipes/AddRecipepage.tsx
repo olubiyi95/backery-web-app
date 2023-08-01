@@ -19,7 +19,10 @@ import {
 import { Mainbutton } from '@/components/Button';
 import * as Yup from 'yup';
 import { useFormik, validateYupSchema } from "formik";
-import { useToast } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react';
+import { isEmpty } from 'lodash';
+import Recipeform from '@/components/Recipeform';
+
 
 const AddRecipepage = () => {
 
@@ -27,14 +30,21 @@ const AddRecipepage = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewVisible, setPreviewVisible] = useState(false);
   const [breadname, setBreadname] = useState<string>('');
-  // const [ingredientlist, setIngredientlist] = useState<Ingredientlist>({ ingredient: '', serving: '', unit: '' });
-  const [showingredient, seShowingredient] = useState<Ingredientlist[]>([]);
+  const [recipenote, setRecipenote] = useState<string>('');
+  const [showingredient, setShowingredient] = useState<Ingredientlist[]>([]);
   const toast = useToast();
   const boxWidth = useBreakpointValue({ base: '350px', sm: '350px', md: '400px', lg: '400px' });
   const selectinputWidth = useBreakpointValue({ base: '250px', sm: '250px', md: '300px', lg: '300px' });
   const selectWidth = useBreakpointValue({ base: '100px', sm: '100px', md: '100px', lg: '100px' });
   const topboxWidth = useBreakpointValue({ base: '90vw', sm: '90vw', md: '90vw', lg: '50vw' });
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+  const [error1, setError1] = useState<string>('');
+  const [error2, setError2] = useState<string>('');
+  const [error3, setError3] = useState<string>('');
+  const [touched1, setTouched1] = useState<boolean>(false);
+  const [touched2, setTouched2] = useState<boolean>(false);
+
+
 
   interface Ingredientlist {
     ingredient: string
@@ -42,6 +52,29 @@ const AddRecipepage = () => {
     unit: string
   };
 
+  interface Headerprops {
+    heading: string
+    buttontext: string
+    navigate: Navigate
+  };
+
+
+
+  type Navigate = () => void;
+
+  const nextpage: Navigate = () => {
+
+  };
+
+  const headersprops: Headerprops = {
+    heading: 'Add Recipe',
+    buttontext: 'Upload',
+    navigate: nextpage
+  };
+
+
+
+  //TO ADD AN INGREDIENT
   const formik = useFormik<Ingredientlist>({
     initialValues: {
       ingredient: '',
@@ -50,25 +83,33 @@ const AddRecipepage = () => {
     },
     onSubmit: (values, { resetForm }) => {
       const newValues: Ingredientlist[] = values
-      seShowingredient(prevState => [...prevState, newValues])
+      setShowingredient((prevState) => ([...prevState, newValues]))
+      toast({
+        title: 'Added.',
+        description: "Ingredient added successfully.",
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      })
       resetForm();
 
     },
     validationSchema: Yup.object({
-      ingredient: Yup.string().required('Ingredient is required'),
+      ingredient: Yup.string().required('ingredient is required'),
       serving: Yup.string().required('serving is required'),
       unit: Yup.string().required('unit is required')
     })
   });
 
 
-
+  //TO GET IMAGE URL
   const getBase64 = (img, callback) => {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
   };
 
+  //IMAGE UPLOAD PROPERTIES
   const props: UploadProps = {
     name: 'file',
     action: '',
@@ -86,7 +127,7 @@ const AddRecipepage = () => {
       }
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file selected successfully`);
-        getBase64(info.file.originFileObj, (url) => {
+        getBase64(info.file.originFileObj, (url: string) => {
           setPreviewImage(url);
           setPreviewVisible(true);
         });
@@ -97,33 +138,137 @@ const AddRecipepage = () => {
   };
 
 
-
+  //TO CLOSE IMAGE PREVIEW
   const handleCancel = () => {
     setPreviewVisible(false);
   };
 
+  //TO DELETE AN INGREDIENT
   const deleteItem = (itemtodelete: string) => {
-    seShowingredient(prevState => prevState.filter(obj => obj.ingredient !== itemtodelete))
+    setShowingredient(prevState => prevState.filter(obj => obj.ingredient !== itemtodelete))
+    toast({
+      title: 'deleted.',
+      description: "In gredient was removed successfully.",
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+    })
+  }
+
+  //TO VALIDATE BREADNAME 
+  const validateBreadname = () => {
+    if (!breadname.trim()) {
+
+      setError1('breadname is required')
+    } else {
+
+      setError1('')
+    }
+  }
+
+  //TO VALIDATE RECIPE NOTE
+  const validateRecipeNote = () => {
+    if (!recipenote.trim()) {
+      setError2('recipe note is required');
+    } else {
+      setError2('');
+    }
   }
 
 
-  interface Headerprops {
-    heading: string
-    buttontext: string
-    navigate: Navigate
+
+  //TO GET INPUTTED RECIPE DETAILS
+  const getRecipedetails = (e: React.FormEvent<HTMLFormElement>) => {
+
+    e.preventDefault()
+    if (isEmpty(breadname || showingredient || recipenote || previewImage))
+      toast({
+        title: 'failed.',
+        description: "Please fill the form.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      })
+    else if (isEmpty(breadname)) {
+      setError1('breadname is required')
+      toast({
+        title: 'failed.',
+        description: "Please add a bread name.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      })
+    } else if (isEmpty(showingredient)) {
+      setError3("add an ingredient")
+      toast({
+        title: 'failed.',
+        description: "Please add an ingredient.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      })
+    } else if (isEmpty(recipenote)) {
+      setError2('recipe note is required')
+      toast({
+        title: 'failed.',
+        description: "Please add a recipe note.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      })
+    } else if (isEmpty(previewImage)) {
+      toast({
+        title: 'failed.',
+        description: "Please add an image.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      })
+    }
+    else if (!isEmpty(breadname && showingredient && recipenote && previewImage)) {
+      const values = { breadname, showingredient, recipenote, previewImage };
+      // alert(JSON.stringify(values));
+      toast({
+        title: 'success.',
+        description: "recipe added.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setPreviewImage('')
+      setBreadname('');
+      setShowingredient([]);
+      setRecipenote("");
+      setPreviewVisible(false);
+    }
+  }
+
+  //TO HANDLE INPUT CHANGE
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBreadname(e.target.value)
+    if (!isEmpty(breadname)) {
+      setError1('')
+    }
+  }
+
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setRecipenote(e.target.value)
+    if (!isEmpty(recipenote)) {
+      setError2('')
+    }
+  }
+
+  //TO HANDLE BLUR
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTouched1(true)
+    validateBreadname()
   };
 
-  type Navigate = () => void;
-
-  const nextpage: Navigate = () => {
-
-  };
-
-  const headersprops: Headerprops = {
-    heading: 'Add Recipe',
-    buttontext: 'Upload',
-    navigate: nextpage
-  };
+  const handleBlur2 = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTouched2(true);
+    validateRecipeNote();
+  }
 
 
 
@@ -173,19 +318,25 @@ const AddRecipepage = () => {
 
         >
           <VStack spacing={10} align={'self-start'} justify={'flex-start'} width={boxWidth}>
-            <FormControl>
+            <FormControl isRequired={true} isInvalid={error1 && touched1}>
               <FormLabel>Add Bread Name</FormLabel>
               <Input type='text'
                 name='breadname'
+                value={breadname}
                 _focus={{ border: "none" }}
                 border={'1px solid #aaa'}
                 focusBorderColor="none"
                 placeholder={'Enter bread name'}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
+              <FormErrorMessage color={'red'}>{error1}</FormErrorMessage>
+              {/* {!!error1 && touched1 ? (<FormErrorMessage color={'red'}>{errors.breadname}</FormErrorMessage>) : ""} */}
+
             </FormControl>
             <form onSubmit={formik.handleSubmit}>
               <Box width={boxWidth}>
-                <FormControl>
+                <FormControl isInvalid={!!formik.errors.ingredient && formik.touched.ingredient} my={6} isRequired={true}>
                   <FormLabel>Ingredient</FormLabel>
                   <Input type='text'
                     name='ingredient'
@@ -195,8 +346,9 @@ const AddRecipepage = () => {
                     placeholder={'Enter ingredient'}
                     {...formik.getFieldProps('ingredient')}
                   />
+                  <FormErrorMessage color={'red'}>{formik.errors.ingredient}</FormErrorMessage>
                 </FormControl>
-                <FormControl mt={10}>
+                <FormControl mt={10} isInvalid={!!formik.errors.serving && formik.touched.serving || formik.touched.unit && formik.errors.unit} isRequired={true}>
                   <FormLabel>Maximum Serving Size</FormLabel>
                   <HStack spacing={0} w={'400px'}>
                     <Input placeholder="Enter maximum serving"
@@ -205,12 +357,13 @@ const AddRecipepage = () => {
                       _focus={{ border: "none" }}
                       border={'1px solid #aaa'}
                       focusBorderColor="none"
+                      type="number"
                       {...formik.getFieldProps('serving')}
                     />
                     <Select placeholder="unit"
                       name='unit'
                       w={selectWidth}
-                      defaultValue='unit'
+                      value='unit'
                       _focus={{ border: "none" }}
                       border={'1px solid #aaa'}
                       focusBorderColor="none"
@@ -222,6 +375,8 @@ const AddRecipepage = () => {
                       <option value="litres">litres</option>
                     </Select>
                   </HStack>
+                  <FormErrorMessage color={'red'}>{formik.errors.serving || formik.errors.unit}</FormErrorMessage>
+                  {error3 && (<FormErrorMessage color={'red'}>{error3}</FormErrorMessage>)}
                 </FormControl>
                 <HStack justify={'start'}>
                   <Button leftIcon={<PlusCircleOutlined />} colorScheme="white" color={'orange.400'} type='submit'>
@@ -236,28 +391,35 @@ const AddRecipepage = () => {
               <Box key={item.ingredient} w={boxWidth}>
                 <ul>
                   <HStack justify={'space-between'}>
-                    <List spacing={2}>
+                    <List spacing={0}>
                       <ListItem>
                         <ListIcon as={UnorderedListOutlined} color='green.500' />
                         {item.ingredient} {item.serving} {item.unit}
                       </ListItem>
                     </List>
-                    {/* <li>{item.ingredient} {item.serving} {item.unit}</li> */}
                     <IconButton aria-label='delete' size={'md'} colorScheme='red' icon={<DeleteOutlined />} onClick={() => deleteItem(item.ingredient)} />
-                  </HStack>
-                </ul>
-              </Box>
+                  </HStack >
+                </ul >
+              </Box >
             ))}
-            <FormLabel>Recipe Notes</FormLabel>
-            <Textarea
-              placeholder='Enter recipe notes'
-              _focus={{ border: "none" }}
-              border={'1px solid #aaa'}
-              focusBorderColor="none"
-            />
-            <Mainbutton title={'Save'} isLoading={isLoading1} colorScheme='orange' size='lg' width={isLargerThan768 ? '400px' : '350px'} types='submit' />
-          </VStack>
-        </Box>
+            <FormControl isRequired={true} isInvalid={touched2 && error2}>
+              <FormLabel>Recipe Notes</FormLabel>
+              <Textarea
+                placeholder='Enter recipe notes'
+                value={recipenote}
+                _focus={{ border: "none" }}
+                border={'1px solid #aaa'}
+                focusBorderColor="none"
+                onChange={handleTextChange}
+                onBlur={handleBlur2}
+              />
+              <FormErrorMessage color={'red'}>{error2}</FormErrorMessage>
+            </FormControl>
+            <Button isLoading={isLoading1} colorScheme='orange' size='lg' width={isLargerThan768 ? '400px' : '350px'} type='submit' onClick={getRecipedetails}>
+              Save
+            </Button>
+          </VStack >
+        </Box > *
 
       </DashboardLayout>
     </div>
@@ -265,3 +427,7 @@ const AddRecipepage = () => {
 }
 
 export default AddRecipepage
+
+
+
+

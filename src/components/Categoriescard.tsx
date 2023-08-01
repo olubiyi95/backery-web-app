@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const Categoriescard: FC<{ image: any, title: string, description: string, link: string, linktext: string }> = ({ image, title, description, link, linktext }) => {
 
-  const cardWidth = useBreakpointValue({ base: '350px', sm: '350px', md: '350px', lg: '100%' });
+  const cardWidth = useBreakpointValue({ base: '350px', sm: '350px', md: '350px', lg: '350px' });
   const cardHeight = useBreakpointValue({ base: '200px', sm: '250px', md: '300px', lg: '450px' });
 
 
@@ -18,7 +18,7 @@ const Categoriescard: FC<{ image: any, title: string, description: string, link:
   }
 
   const imageStyle: imagestyle = {
-    width: '350px',
+    width: '100%',
     height: '300px',
     //borderRadius:'5.5% 5.5% 0 0'
   }
