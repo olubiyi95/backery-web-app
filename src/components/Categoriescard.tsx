@@ -46,7 +46,7 @@ const Categoriescard: FC<{ image: any, title: string, description: string, link:
         <CardBody>
           <Stack mt='6' spacing='0' align={'flex-start'} >
             <Heading size='md'>{title}</Heading>
-            <Text>
+            <Text align={'left'}>
               {description}
             </Text>
             <Text style={linkStyle}> <Link href={link} style={{ color: '#fe9500' }}>{linktext} </Link></Text>

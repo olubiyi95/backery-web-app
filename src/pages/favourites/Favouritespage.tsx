@@ -1,27 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, useBreakpointValue, Flex } from '@chakra-ui/react'
-import styles from '../styles/categories.module.scss'
-import image1 from '../assets/bite-size-flat-bread.jpg';
-import image2 from '../assets/bread-toasted.jpg';
-import image3 from '../assets/buttered-toast-on-cutting-board.jpg';
-import image4 from '../assets/duminda-perera-zYsB2mezSnA-unsplash.jpg'
-import image5 from '../assets/fresh-bread-and-jam.jpg';
-import image6 from '../assets/sliced-rye-bread.jpg';
-import image7 from '../assets/shrimp-lunch-dish.jpg';
-import image8 from '../assets/slice-of-bread-toasted.jpg';
+import React, { useState, useEffect } from 'react'
+import DashboardLayout from '@/Layouts/DashboardLayout';
+import { Box, Flex, Heading, useBreakpointValue, useMediaQuery } from '@chakra-ui/react';
+import image1 from '@/assets/bite-size-flat-bread.jpg';
+import image2 from '@/assets/bread-toasted.jpg';
+import image3 from '@/assets/buttered-toast-on-cutting-board.jpg';
+import image4 from '@/assets/duminda-perera-zYsB2mezSnA-unsplash.jpg'
+import image5 from '@/assets/fresh-bread-and-jam.jpg';
+import image6 from '@/assets/sliced-rye-bread.jpg';
+import image7 from '@/assets/shrimp-lunch-dish.jpg';
+import image8 from '@/assets/slice-of-bread-toasted.jpg';
 import { StaticImageData } from 'next/image';
-import { useMediaQuery } from '@chakra-ui/react';
-import Categoriescard from './Categoriescard';
-import SkeletonComp from './SkeletonComp';
-import Spincomp from './Spincomp';
+import Categoriescard from '@/components/Categoriescard';
+import SkeletonComp from '@/components/SkeletonComp';
+import Spincomp from '@/components/Spincomp';
 
-
-const Categories = () => {
+const Favouritespage = () => {
 
     const [loading, setLoading] = useState(true);
     const [isLargerThan600] = useMediaQuery('(min-width: 992px)')
     const columnCount = useBreakpointValue({ base: 1, sm: 1, md: 2, lg: 2, xl: 4 });
-
 
     interface Categorytype {
         id: number,
@@ -167,78 +164,38 @@ const Categories = () => {
         // setLoading(true)
         setTimeout(() => {
             setLoading(false)
-        }, 4000)
+        }, 3000)
     }
 
     useEffect(() => {
         delaySkel()
     }, [])
 
+
+
+
+
     return (
-        <Box>
-            <Tabs isFitted={true} isLazy={true} lazyBehavior='unmount' size='lg' variant='solid-rounded' colorScheme='orange' align='start' >
-                <TabList>
-                    <Tab className={styles['tabs']} _selected={{ color: 'white', bg: '#fe9500' }}>All</Tab>
-                    <Tab className={styles['tabs']} _selected={{ color: 'white', bg: '#fe9500' }}>Breakfast</Tab>
-                    <Tab className={styles['tabs']} _selected={{ color: 'white', bg: '#fe9500' }}>Lunch</Tab>
-                    <Tab className={styles['tabs']} _selected={{ color: 'white', bg: '#fe9500' }}>Brunch</Tab>
-                    <Tab className={styles['tabs']} _selected={{ color: 'white', bg: '#fe9500' }}>Dinner</Tab>
-                </TabList>
-
-                <TabPanels>
-                    <TabPanel mt={10}>
-
-                        {loading ? <Spincomp spinning={loading} /> :
-                            <div>
-                                <Box
-                                    display={'grid'}
-                                    gridTemplateColumns={`repeat(${columnCount}, 1fr)`}
-                                    gridGap={5}
-                                    gap={10}
-                                >
-                                    {categories.map(item => (
-                                        <Categoriescard key={item.id} image={item.image} title={item.name} description={item.description} link={item.link} linktext={item.linktext} />
-                                    ))}
-                                </Box>
-                            </div>
-                        }
-
-
-                        {/* <SkeletonComp loading={loading} active >
-
-
-                        </SkeletonComp> */}
-                    </TabPanel>
-                    {/* TAB2 */}
-                    <TabPanel mt={10}>
-                        <SkeletonComp loading={loading} active>
-
-                            <Box
-                                display={'grid'}
-                                gridTemplateColumns={`repeat(${columnCount}, 1fr)`}
-                                gridGap={5}
-                                gap={10}
-                            >
-                                {categories.map(item => (
-                                    <Categoriescard key={item.id} image={item.image} title={item.name} description={item.description} link={item.link} linktext={item.linktext} />
-                                ))}
-                            </Box>
-
-                        </SkeletonComp>
-                    </TabPanel>
-                    <TabPanel>
-                        <p>three!</p>
-                    </TabPanel>
-                    <TabPanel>
-                        <p>four!</p>
-                    </TabPanel>
-                    <TabPanel>
-                        <p>five!</p>
-                    </TabPanel>
-                </TabPanels>
-            </Tabs>
-        </Box>
+        <DashboardLayout>
+            <Box>
+                <Flex align={'flex-start'}>
+                    <Heading>Favourite</Heading>
+                </Flex>
+                {loading ? <Spincomp spinning={loading} /> :
+                    <Box
+                        display={'grid'}
+                        gridTemplateColumns={`repeat(${columnCount}, 1fr)`}
+                        gridGap={5}
+                        gap={10}
+                    >
+                        {categories.map(item => (
+                            <Categoriescard key={item.id} image={item.image} title={item.name} description={item.description} link={item.link} linktext={item.linktext} />
+                        ))}
+                    </Box>
+                }
+            </Box>
+        </DashboardLayout>
     )
 }
 
-export default Categories
+export default Favouritespage

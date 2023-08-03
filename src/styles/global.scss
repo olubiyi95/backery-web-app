@@ -85,3 +85,43 @@ body {
  .ant-upload .ant-upload-select {
     display: none!important;
 }
+
+// .settings-profile {
+
+//     .anticon svg {
+//         display: inline-block;
+//         width: 30px;
+//         height: 30px;
+//         color: white;
+//     }
+// }
+
+.custom-spin-container {
+    display: block;
+    margin: 20% 0 !important;
+    
+  }
+  .ant-spin-text {
+    color:  #fe9500!important;
+    font-size: 20px!important;
+    padding: 20px 0 !important;
+  }
+
+  .ant-spin-dot .ant-spin-dot-spin {
+    color:  #fe9500!important;
+    height: 45px!important;
+    width: 45px!important;
+  }
+
+  .ant-spin-dot-item {
+    background-color: #fe9500!important;
+    height: 45px!important;
+    width: 45px!important;
+
+  }
+  
+  /* Target the Spin child elements and change the color */
+  .custom-spin-container .ant-spin-dot {
+    /* Customize the color */
+    color: red; /* Change to your desired color */
+  }

@@ -47,6 +47,8 @@ const DashboardLayout: FC<Childrenprops> = ({ children }) => {
       '/': 'home',
       '/about': 'about',
       '/contact': 'contact',
+      '/favourites': 'favourites',
+      '/settings': 'settings'
     };
 
     return routeToKeyMap[currentPath];
@@ -83,13 +85,13 @@ const DashboardLayout: FC<Childrenprops> = ({ children }) => {
                 <Menu.Item key="/recipe" onClick={() => router.push('/recipes/RecipesListpage')} icon={<BiFoodMenu />}>
                   My Recipe
                 </Menu.Item>
-                <Menu.Item key="/community" onClick={() => setCurrent('/categories/Categoriespage')} icon={<BiFoodMenu />}>
+                {/* <Menu.Item key="/community" onClick={() => setCurrent('/categories/Categoriespage')} icon={<BiFoodMenu />}>
                   Community
-                </Menu.Item>
-                <Menu.Item key="/favourite" onClick={() => setCurrent('/categories/Categoriespage')} icon={<MdOutlineFavoriteBorder />}>
+                </Menu.Item> */}
+                <Menu.Item key="/favourites" onClick={() => router.push('/favourites/Favouritespage')} icon={<MdOutlineFavoriteBorder />}>
                   Favourites
                 </Menu.Item>
-                <Menu.Item key="/settings" onClick={() => setCurrent('/categories/Categoriespage')} icon={<CiSettings />}>
+                <Menu.Item key="/settings" onClick={() => router.push('/settings/Settingspage')} icon={<CiSettings />}>
                   Settings
                 </Menu.Item>
               </Menu>
