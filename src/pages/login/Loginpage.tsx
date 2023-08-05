@@ -56,7 +56,6 @@ const Loginpage = () => {
           duration: 2000,
           isClosable: true,
         })
-
       }, 3000)
 
 
@@ -118,6 +117,7 @@ const Loginpage = () => {
               <FormErrorMessage color={'red'}>{formik.errors.password}</FormErrorMessage>
 
             </FormControl>
+            <Text>Forgot your password? <Link href='/resetPassword/ResetPasswordpage'><span className={styles['span-links']} color='#4299E1'>Reset password</span></Link></Text>
             <Mainbutton title={'Login'} isLoading={isLoading1} colorScheme='orange' size='lg' width="full" types='submit'></Mainbutton>
           </form>
         </VStack>

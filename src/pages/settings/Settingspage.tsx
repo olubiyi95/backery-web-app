@@ -35,7 +35,7 @@ const Settingspage = () => {
                     </Flex>
                     <Box display={'flex'} justifyItems={'flex-start'} alignItems={'center'}>
                         <VStack spacing={5}>
-                            <HStack spacing={8} justifyContent={'center'} alignItems={'center'}>
+                            <HStack spacing={8} justifyContent={'center'} alignItems={'center'} _hover={{ cursor: 'pointer' }}>
                                 <Box height={'50px'} width={'50px'} borderRadius={'50px'} backgroundColor={'orange.400'} className='settings-profile' display={'flex'} justifyContent={'center'} alignItems={'center'} >
                                     <LiaUserSolid size={24} fill='white' />
                                 </Box>
@@ -43,7 +43,7 @@ const Settingspage = () => {
                                     <Text fontSize={'2xl'} mb={0} fontWeight={'500'} >Profile</Text>
                                 </Center>
                             </HStack>
-                            <HStack spacing={8} justifyContent={'center'} alignItems={'center'} onClick={logout} >
+                            <HStack spacing={8} justifyContent={'center'} alignItems={'center'} onClick={logout} _hover={{ cursor: 'pointer' }}>
                                 <Box height={'50px'} width={'50px'} borderRadius={'50px'} backgroundColor={'orange.400'} className='settings-profile' display={'flex'} justifyContent={'center'} alignItems={'center'}>
                                     <AiOutlineLogout size={24} fill='white' />
                                 </Box>
