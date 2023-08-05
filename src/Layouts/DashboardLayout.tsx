@@ -8,12 +8,13 @@ import { AiOutlineHome } from 'react-icons/ai'
 import { BiFoodMenu } from 'react-icons/bi'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
 import { CiSettings } from 'react-icons/ci'
-import { useMediaQuery, Box, Spacer, Text, Flex, useBreakpointValue } from '@chakra-ui/react';
+import { useMediaQuery, Box, Spacer, Text, Flex, useBreakpointValue, Heading } from '@chakra-ui/react';
 import { useRouter } from 'next/router'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined
 } from '@ant-design/icons';
+import { size } from 'lodash';
 
 
 
@@ -28,8 +29,10 @@ const DashboardLayout: FC<Childrenprops> = ({ children }) => {
   const [current, setCurrent] = useState<string>('');
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)')
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)')
-  const layoutMargin = useBreakpointValue({ base: '18%', sm: '15%', md: '10%', lg: '12%', xl: '10%' });
+  const showMobile = useMediaQuery('max-width: 768px')
+  const layoutMargin = useBreakpointValue({ base: '18%', sm: '15%', md: '10%', lg: '12%', xl: '12%' });
   const layoutWidth = useBreakpointValue({ base: '100%', sm: '100%', md: '90%', lg: '100%', xl: '85%' });
+  const headerMargin = useBreakpointValue({ base: 170, sm: 170, md: 170, lg: 270, xl: 270 });
   const router = useRouter();
   const {
     token: { colorBgContainer },
@@ -60,7 +63,7 @@ const DashboardLayout: FC<Childrenprops> = ({ children }) => {
         <Sider trigger={null} collapsible collapsed={collapsed}
           style={{
             overflow: 'auto',
-            height: '100vh',
+            height: '100%',
             position: 'fixed',
             left: 0,
             top: 0,
@@ -100,8 +103,8 @@ const DashboardLayout: FC<Childrenprops> = ({ children }) => {
         </Sider>
         <Layout>
           <>
-            <Header style={{ paddingRight: 0, background: colorBgContainer, width: '100%' }}>
-              <Flex direction={'row'} alignItems='center' gap='2' justify={'space-between'}>
+            <Header style={{ paddingRight: 0, background: colorBgContainer, width: '100%', position: 'fixed', top: 0, zIndex: 800 }}>
+              <Flex direction={'row'} alignItems='center' gap='8' justify={'space-between'}>
                 <Button
                   type="text"
                   icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -116,21 +119,35 @@ const DashboardLayout: FC<Childrenprops> = ({ children }) => {
                     zIndex: 9999
                   }}
                 />
-
+                {isLargerThan992 ?
+                  <Heading style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: headerMargin,
+                  }} size={'lg'} m={3}>
+                    Breadwinners
+                  </Heading> : showMobile && collapsed ? <Heading style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: headerMargin,
+                  }} size={'lg'} m={3}>
+                    Breadwinners
+                  </Heading> : ''
+                }
                 <Spacer></Spacer>
                 <Box
                   height={'60px'}
                   width={isLargerThan992 ? '500px' : '200px'}
                   className={styles['navbarcard']}
                 >
-                  <Profilecard src={profileimage} alt='profileimage' />
+                  {isLargerThan992 ? <Profilecard src={profileimage} alt='profileimage' /> : ''}
                 </Box>
               </Flex>
             </Header>
 
             <Content
               style={{ marginInline: layoutMargin, width: layoutWidth }}>
-              <div style={{ padding: 24, textAlign: 'center', background: colorBgContainer }}>
+              <div style={{ padding: 24, textAlign: 'center', background: colorBgContainer, marginTop: 50 }}>
                 {children}
               </div>
             </Content>

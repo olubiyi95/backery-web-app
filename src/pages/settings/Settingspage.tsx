@@ -4,14 +4,25 @@ import { Box, Flex, Heading, useBreakpointValue, useMediaQuery, List, ListIcon, 
 import { UserOutlined } from '@ant-design/icons';
 import { LiaUserSolid } from 'react-icons/lia';
 import { AiOutlineLogout } from 'react-icons/ai';
-
-
+import { useRouter } from 'next/router';
+import { useToast } from '@chakra-ui/react';
 
 const Settingspage = () => {
 
-    const settingsArray = [
+    const router = useRouter();
+    const toast = useToast();
 
-    ]
+    const logout = () => {
+        router.push('/login/Loginpage')
+        toast({
+            title: 'success.',
+            description: "you have logged out successfully.",
+            status: "success",
+            duration: 4000,
+            isClosable: true,
+        })
+    }
+
 
     return (
         <>
@@ -32,8 +43,8 @@ const Settingspage = () => {
                                     <Text fontSize={'2xl'} mb={0} fontWeight={'500'} >Profile</Text>
                                 </Center>
                             </HStack>
-                            <HStack spacing={8} justifyContent={'center'} alignItems={'center'}>
-                                <Box height={'50px'} width={'50px'} borderRadius={'50px'} backgroundColor={'orange.400'} className='settings-profile' display={'flex'} justifyContent={'center'} alignItems={'center'} >
+                            <HStack spacing={8} justifyContent={'center'} alignItems={'center'} onClick={logout} >
+                                <Box height={'50px'} width={'50px'} borderRadius={'50px'} backgroundColor={'orange.400'} className='settings-profile' display={'flex'} justifyContent={'center'} alignItems={'center'}>
                                     <AiOutlineLogout size={24} fill='white' />
                                 </Box>
                                 <Center>

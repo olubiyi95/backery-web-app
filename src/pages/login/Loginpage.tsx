@@ -48,6 +48,7 @@ const Loginpage = () => {
 
       setTimeout(() => {
         setIsloading(false)
+        router.push('/categories/Categoriespage')
         toast({
           title: 'Logged In.',
           description: "You have logged ib successfully.",
@@ -55,8 +56,8 @@ const Loginpage = () => {
           duration: 2000,
           isClosable: true,
         })
-        router.push('/categories/Categoriespage')
-      }, 4000)
+
+      }, 3000)
 
 
     },
