@@ -30,7 +30,7 @@ const DashboardLayout: FC<Childrenprops> = ({ children }) => {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)')
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)')
   const showMobile = useMediaQuery('max-width: 768px')
-  const layoutMargin = useBreakpointValue({ base: '18%', sm: '15%', md: '10%', lg: '12%', xl: '12%' });
+  const layoutMargin = useBreakpointValue({ base: "15%", sm: '15%', md: '10%', lg: '12%', xl: '12%' });
   const layoutWidth = useBreakpointValue({ base: '100%', sm: '100%', md: '90%', lg: '100%', xl: '85%' });
   const headerMargin = useBreakpointValue({ base: 170, sm: 170, md: 170, lg: 270, xl: 270 });
   const router = useRouter();

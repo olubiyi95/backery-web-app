@@ -74,7 +74,7 @@ const ResetPasswordpage = () => {
                                 />
                                 <FormErrorMessage color={'red'}>{formik.errors.email}</FormErrorMessage>
                             </FormControl>
-                            <Text>Remembered your password? <Link href='/login/Loginpage'><span className={styles['span-links']} color='#4299E1'>Login</span></Link></Text>
+                            <Text>Already have an account?? <Link href='/login/Loginpage'><span className={styles['span-links']} color='#4299E1'>Login</span></Link></Text>
                             <Mainbutton title={'Send Mail'} isLoading={isLoading1} colorScheme='orange' size='lg' width="full" types='submit'></Mainbutton>
                         </form>
                     </VStack>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, useBreakpointValue, Flex } from '@chakra-ui/react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, useBreakpointValue, Stack } from '@chakra-ui/react'
 import styles from '../styles/categories.module.scss'
 import image1 from '../assets/bite-size-flat-bread.jpg';
 import image2 from '../assets/bread-toasted.jpg';
@@ -21,6 +21,7 @@ const Categories = () => {
     const [loading, setLoading] = useState(true);
     const [isLargerThan600] = useMediaQuery('(min-width: 992px)')
     const columnCount = useBreakpointValue({ base: 1, sm: 1, md: 2, lg: 2, xl: 4 });
+    const tabSize = useBreakpointValue({ base: 'sm', sm: 'sm', md: 'md', lg: "lg" })
 
 
     interface Categorytype {
@@ -163,25 +164,41 @@ const Categories = () => {
         }
     ]
 
+    const useInitializedArray = (categories) => {
+
+        return useMemo(() => {
+            return categories
+        }, [categories])
+    };
+
+    const initializedArray = useInitializedArray(categories)
+
     const delaySkel = () => {
         // setLoading(true)
         setTimeout(() => {
             setLoading(false)
-        }, 4000)
+        }, 3000)
     }
 
+    // const delay = useCallback(() => {
+    //     setLoading(true)
+    //     setTimeout(() => {
+    //         setLoading(false)
+    //     }, 4000)
+    // }, [])
+
     useEffect(() => {
-        delaySkel()
-    }, [])
+        delaySkel();
+        console.log('initializedArray changed:', initializedArray);
+    }, [initializedArray])
 
     return (
         <Box>
-            <Tabs isFitted={true} isLazy={true} lazyBehavior='unmount' size='lg' variant='solid-rounded' colorScheme='orange' align='start' >
+            <Tabs isFitted={false} isLazy={false} size={`${tabSize}`} variant='solid-rounded' colorScheme='orange' align='start'>
                 <TabList>
                     <Tab className={styles['tabs']} _selected={{ color: 'white', bg: '#fe9500' }}>All</Tab>
                     <Tab className={styles['tabs']} _selected={{ color: 'white', bg: '#fe9500' }}>Breakfast</Tab>
                     <Tab className={styles['tabs']} _selected={{ color: 'white', bg: '#fe9500' }}>Lunch</Tab>
-                    <Tab className={styles['tabs']} _selected={{ color: 'white', bg: '#fe9500' }}>Brunch</Tab>
                     <Tab className={styles['tabs']} _selected={{ color: 'white', bg: '#fe9500' }}>Dinner</Tab>
                 </TabList>
 

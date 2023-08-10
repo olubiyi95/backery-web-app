@@ -8,7 +8,7 @@ import Link from 'next/link';
 const Categoriescard: FC<{ image: any, title: string, description: string, link: string, linktext: string }> = ({ image, title, description, link, linktext }) => {
 
   const cardWidth = useBreakpointValue({ base: '350px', sm: '350px', md: '350px', lg: '350px' });
-  const cardHeight = useBreakpointValue({ base: '200px', sm: '250px', md: '300px', lg: '450px' });
+  const cardHeight = useBreakpointValue({ base: '200px', sm: '250px', md: '300px', lg: '480px' });
 
 
   interface imagestyle {
@@ -35,7 +35,7 @@ const Categoriescard: FC<{ image: any, title: string, description: string, link:
 
   return (
     <Box  >
-      <Card boxShadow='lg' rounded='md' bg='white' w={cardWidth} zIndex='1' borderRadius={'20px'} align={'flex-start'} className={styles['categoriescard']} _hover={{ transition: 'all 0.3s ease', transform: 'scale(1.030)' }} overflow={'hidden'}>
+      <Card boxShadow='lg' rounded='md' bg='white' w={cardWidth} zIndex='1' borderRadius={'20px'} border={'0.5px solid #fe9500 '} align={'flex-start'} className={styles['categoriescard']} _hover={{ transition: 'all 0.3s ease', transform: 'scale(1.030)' }} overflow={'hidden'}>
         <Image
           src={image}
           alt='Green double couch with wooden legs'
